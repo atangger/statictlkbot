@@ -8,12 +8,6 @@
 <body>
 	<script type="text/javascript">
 		$(document).ready(function(){
-		  $("button#sentbnt").click(function(){
-		  	console.log("in click")
-		  $("p").html("fucker");
-		  });
-			makeTheCall("");
-
 			function makeTheCall(queryString) {
 			  successResponse = function(data) {
 			  //functionality goes here;
@@ -27,20 +21,33 @@
 				  console.log("fail");
 			  }
 			    var destinationUrl = "https://5rorhfa1mb.execute-api.us-east-1.amazonaws.com/test/seatle";
+			    var data = new Object()
+			    data['name2'] = "twj";
+			    data['city'] = "New York";
+			    data['message'] = queryString;
+			    data = JSON.stringify(data);
 			    $.ajax({
-			      type: 'GET',
+			      type: 'POST',
 			      url: destinationUrl + queryString,
 			      dataType: 'json', // use json only, not jsonp
 			      crossDomain: true, // tell browser to allow cross domain.
 			      success: successResponse,
-			      error: failureFunction
+			      error: failureFunction,
+			      headers: {'x-api-key': 'poHeSUZRuL3LWWkAkbUHx9V9lKdJYUPbMOHoM149'},
+			      data: data
 			    });
 			  }
+		  $("button#sentbnt").click(function(){
+		  	console.log("in click");
+		  	inputStr = $(" input[ name='message' ] ").val();
+		  	console.log("the input = " + inputStr);
+		  	makeTheCall(inputStr);
+		  });
 			 
 		});
 	</script>
 	<p>default</p>
-	<button type="button" id = "sentbnt">sent</button>
-    <form action>
+    input message: <input type="text" name="message" />
+   	<button type="button" id = "sentbnt">sent</button>
 </body>
 </html>
